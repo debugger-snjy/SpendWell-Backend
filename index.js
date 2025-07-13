@@ -10,6 +10,12 @@ const bodyParser = require('body-parser');
 const path = require("path")
 const fs = require("fs");
 
+// Importing the dotenv
+const dotenv = require('dotenv');
+
+// Getting the Environment Variables from the env file
+dotenv.config();
+
 const app = express()
 // Changing the port number as 3000 port is reserved for react which will make us difficult for us later
 const port = 5000
@@ -36,9 +42,15 @@ const noteRoute = require("./Routes/notes");
 connectToMongoCluster()
 
 // Adding Middlewares :
-app.use(cors()); // Added cors package for removing the cors error
+//app.use(cors()); // Added cors package for removing the cors error
+app.use(cors({
+    origin: process.env.CROSS_ORIGIN,
+    credentials: true
+}));
 app.use(express.json())  // to view the request body data
 app.use(bodyParser.raw({ type: 'application/octet-stream' }));
+
+
 
 // Available Routes
 // Basic Testing Route
